@@ -6,15 +6,11 @@ from odoo import fields, models
 
 
 class ProductCategory(models.Model):
+    _name = "product.category"
     _inherit = "product.category"
 
-    income_analytic_account_id = fields.Many2one(
-        "account.analytic.account",
-        string="Income Analytic Account",
-        company_dependent=True,
-    )
-    expense_analytic_account_id = fields.Many2one(
-        "account.analytic.account",
-        string="Expense Analytic Account",
-        company_dependent=True,
+    analytic_distribution_model_ids = fields.One2many(
+        "account.analytic.distribution.model",
+        "product_categ_id",
+        string="Analytic Distribution Models",
     )

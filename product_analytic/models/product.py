@@ -6,25 +6,11 @@
 from odoo import fields, models
 
 
-class ProductTemplate(models.Model):
-    _inherit = "product.template"
+class ProductProduct(models.Model):
+    _inherit = "product.product"
 
-    income_analytic_account_id = fields.Many2one(
-        "account.analytic.account",
-        string="Income Analytic Account",
-        company_dependent=True,
+    analytic_distribution_model_ids = fields.One2many(
+        "account.analytic.distribution.model",
+        "product_id",
+        string="Analytic Distribution Models",
     )
-    expense_analytic_account_id = fields.Many2one(
-        "account.analytic.account",
-        string="Expense Analytic Account",
-        company_dependent=True,
-    )
-
-    def _get_product_analytic_accounts(self):
-        self.ensure_one()
-        return {
-            "income": self.income_analytic_account_id
-            or self.categ_id.income_analytic_account_id,
-            "expense": self.expense_analytic_account_id
-            or self.categ_id.expense_analytic_account_id,
-        }
